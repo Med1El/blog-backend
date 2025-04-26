@@ -1,17 +1,7 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-interface IPost extends Document {
-  title: string;
-  content: string;
-  mainImage: string;
-  extraSmallImages: string[];
-  tags: string[];
-  category: string;
-  author: {
-    id: mongoose.Schema.Types.ObjectId;
-    name: string;
-  };
-}
+import { IPost } from '../interfaces/IPost';
+
 
 const PostSchema: Schema = new Schema({
   title: {
