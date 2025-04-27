@@ -5,6 +5,7 @@ import connectDB from './config/database';
 import authRoutes from './routes/authRoutes';
 import postRoutes from './routes/postRoutes';
 import errorHandler2 from './middlewares/errorHandlerV2';
+import path from 'path';
 
 
 const app = express();
@@ -29,4 +30,4 @@ app.use('/api/posts', postRoutes);
 
 app.use(errorHandler2);
 
-app.use(express.static('uploads'));
+app.use(express.static(path.join('public', 'images')));

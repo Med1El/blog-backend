@@ -1,7 +1,14 @@
 ### Node ###
 
+#enviroment files
+.env
+
 #uploaded-files
 uploads/*
+public
+public/*
+public/images/*
+public/images/thumbnails/*
 
 # Logs
 logs
