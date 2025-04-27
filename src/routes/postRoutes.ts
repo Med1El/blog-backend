@@ -1,15 +1,14 @@
 import { Router } from 'express';
+
 import PostController from '../controllers/postController';
 import authMiddleware from '../middlewares/authMiddleware';
-import upload from '../utils/file-upload';
+import uploadMiddleware from '../middlewares/uploadMiddleware';
+import processImageMiddleware from '../middlewares/processImageMiddleware';
 
 const router = Router();
 
 // Route to create a new post
-router.post('/', authMiddleware, upload.fields([
-    { name: 'mainImage', maxCount: 1 },
-    { name: 'extraSmallImages', maxCount: 4 },
-]), PostController.createPost); //protect
+router.post('/', authMiddleware, uploadMiddleware, processImageMiddleware, PostController.createPost); //protect
 
 // Route to get all posts with pagination
 router.get('/', PostController.getAllPosts);

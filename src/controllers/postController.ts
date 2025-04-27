@@ -9,16 +9,17 @@ export const createPost = async (req: Request, res: Response, next: NextFunction
         const { title, content, tags, category, author } = req.body;
         let mainImage: string | undefined;
         let extraSmallImages: string[] = [];
-        if (req.files && Object.keys(req.files).length > 0) {
-            mainImage = (req.files as any)['mainImage'][0].filename;
-            extraSmallImages = (req.files as any)['extraSmallImages']
-                .reduce((acc: string[], obj: any) => {
-                    acc.push(obj.filename);
-                    return acc;
-                }, []);
+
+        if ((req as any).processedFiles) {
+            mainImage = (req as any).processedFiles.mainImageFilename;
+            extraSmallImages = (req as any).processedFiles.extraSmallImageFilenames || [];
+            if (!mainImage) {
+                return next(new AppError('Main image processing failed or was not provided', 400));
+            }
         } else {
-            next(new AppError('No image(s) provided', 400));
+            return next(new AppError('No image(s) were processed or provided', 400));
         }
+
         const post = await Post.create({
             title,
             content,
