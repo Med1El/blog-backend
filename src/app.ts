@@ -10,7 +10,14 @@ import errorHandler2 from './middlewares/errorHandlerV2';
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-connectDB();
+connectDB().then(() => {
+
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+    });
+
+})
+
 
 app.use(cors())
 app.use(express.json());
@@ -23,7 +30,3 @@ app.use('/api/posts', postRoutes);
 app.use(errorHandler2);
 
 app.use(express.static('uploads'));
-
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
